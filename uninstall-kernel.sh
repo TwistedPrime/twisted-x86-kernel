@@ -1,17 +1,31 @@
 #!/bin/bash
-kernelname=5.7.0-rc3+
-
-K1=$kernelname
-K2=$kernelname.old
 sudo cd
+clear
+
+
+makefile=$(pwd)/Makefile
+VERSION=$(cat $makefile | head -2 | tail -1 | cut -d '=' -f2)
+PATCHLEVEL=$(cat $makefile | head -3 | tail -1 | cut -d '=' -f2)
+SUBLEVEL=$(cat $makefile | head -4 | tail -1 | cut -d '=' -f2)
+EXTRAVERSION=$(cat $makefile | head -5 | tail -1 | cut -d '=' -f2)
+VERSION=$(echo "$VERSION" | awk -v FPAT="[0-9]+" '{print $NF}')
+PATCHLEVEL=$(echo "$PATCHLEVEL" | awk -v FPAT="[0-9]+" '{print $NF}')
+SUBLEVEL=$(echo "$SUBLEVEL" | awk -v FPAT="[0-9]+" '{print $NF}')
+EXTRAVERSION=$(echo "$EXTRAVERSION" | awk -v FPAT="[0-9]+" '{print $NF}')
+KERNELVERSION="${VERSION}.${PATCHLEVEL}.${SUBLEVEL}${EXTRAVERSION}"
+
+K1=$KERNELVERSION
+K2=$KERNELVERSION.old
 sudo rm -rf /boot/vmlinuz-$K1
 sudo rm -rf /boot/initrd-$K1
+sudo rm -rf /boot/initrd.img-$K1
 sudo rm -rf /boot/System-map-$K1
 sudo rm -rf /boot/config-$K1
 sudo rm -rf /lib/modules/$K1/
 sudo rm -rf /var/lib/initramfs/$K1/
 sudo rm -rf /boot/vmlinuz-$K2
 sudo rm -rf /boot/initrd-$K2
+sudo rm -rf /boot/initrd.img-$K2
 sudo rm -rf /boot/System-map-$K2
 sudo rm -rf /boot/config-$K2
 sudo rm -rf /lib/modules/$K2/
