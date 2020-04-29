@@ -6,7 +6,7 @@ function msg() {
 
 clear
 
-# Fetch kernel version from makefile -By TwistedPrime
+# Fetch kernel version from makefile
 
 makefile="$(pwd)/Makefile"
 
@@ -17,7 +17,7 @@ EXTRAVERSION=$(cat $makefile | head -5 | tail -1 | cut -d '=' -f2)
 VERSION=$(echo "$VERSION" | awk -v FPAT="[0-9]+" '{print $NF}')
 PATCHLEVEL=$(echo "$PATCHLEVEL" | awk -v FPAT="[0-9]+" '{print $NF}')
 SUBLEVEL=$(echo "$SUBLEVEL" | awk -v FPAT="[0-9]+" '{print $NF}')
-EXTRAVERSION=$(echo "$EXTRAVERSION" | awk -v FPAT="[0-9]+" '{print $NF}')
+EXTRAVERSION="$(echo -e "${EXTRAVERSION}" | sed -e 's/^[[:space:]]*//')"
 
 KERNELVERSION="${VERSION}.${PATCHLEVEL}.${SUBLEVEL}${EXTRAVERSION}"
 
