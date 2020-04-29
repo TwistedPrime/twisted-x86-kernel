@@ -40,6 +40,8 @@ export PREBUILT_CACHE_DIR=~/.ccache
 export CCACHE_DIR=~/.ccache
 THREADS=-j$(nproc --all)
 config=twisted_defconfig
+FLAGS="AR=llvm-ar NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip"
+CLANG="CC=clang HOSTCC=clang"
 
 cp $config .config
 make localmodconfig
@@ -47,7 +49,7 @@ make localmodconfig
 
 msg "Compiling kernel..."
 
-sudo make $THREADS
+sudo make $THREADS $FLAGS $CLANG 
 
 msg "Compiling modules..."
 
