@@ -47,6 +47,8 @@ cp $config .config
 make localmodconfig
 #make menuconfig
 
+SECONDS=0
+
 msg "Compiling kernel..."
 
 sudo make $THREADS $FLAGS $CLANG 
@@ -66,5 +68,7 @@ sudo make $THREADS install
 cd /boot
 sudo mkinitramfs -ko initrd.img-$KERNELVERSION $KERNELVERSION
 sudo update-grub
+
+msg "$(($SECONDS / 3600))hrs $((($SECONDS / 60) % 60))min $(($SECONDS % 60))sec"
 
 msg "Compilation done, reboot to apply changes..."
