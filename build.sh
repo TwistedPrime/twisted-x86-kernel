@@ -72,3 +72,7 @@ sudo update-grub
 msg "$(($SECONDS / 3600))hrs $((($SECONDS / 60) % 60))min $(($SECONDS % 60))sec"
 
 msg "Compilation done, reboot to apply changes..."
+
+read -p "Press Enter to reboot or Ctrl+C to cancel"
+
+reboot
